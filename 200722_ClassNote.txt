@@ -1,0 +1,405 @@
+
+SQL> DESC tblStudent;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(4)
+ NAME                                      NOT NULL VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> DESC employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                     NOT NULL NUMBER(4)
+ EMPNAME                                   NOT NULL VARCHAR2(20)
+ EMPSAL                                             NUMBER(8,2)
+ EMPDESG                                            VARCHAR2(15)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='EMPLOYEE';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SYS_C009654                    P
+SYS_C009655                    C
+SYS_C009656                    C
+SYS_C009657                    U
+SYS_C009658                    U
+SYS_C009659                    C
+
+6 rows selected.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009654;
+
+Table altered.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009655;
+
+Table altered.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009656;
+
+Table altered.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009657;
+
+Table altered.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009658;
+
+Table altered.
+
+SQL> ALTER TABLE Employee DROP CONSTRAINT SYS_C009659;
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='EMPLOYEE';
+
+no rows selected
+
+SQL> DESC Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(4)
+ EMPNAME                                            VARCHAR2(20)
+ EMPSAL                                             NUMBER(8,2)
+ EMPDESG                                            VARCHAR2(15)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT PK_Employee_EmpId PRIMARY KEY;
+ALTER TABLE Employee ADD CONSTRAINT PK_Employee_EmpId PRIMARY KEY
+                                                                *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT PK_Employee_EmpId PRIMARY KEY(EmpId);
+
+Table altered.
+
+SQL> ALTER TABLE Employee MODIFY EmpName VARCHAR2(20) CONSTRAINT NN_Employee_EmpName NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT CHK_Employee_EmpSal
+  2  --CHECK(EmpSal>=5000 AND EmpSal<=20000);
+--CHECK(EmpSal>=5000 AND EmpSal<=20000)
+                                      *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT CHK_Employee_EmpSal
+  2  CHECK(EmpSal BETWEEN 5000 AND 20000);
+
+Table altered.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT UQ_Employee_EmailID UNIQUE(EmailId);
+
+Table altered.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT UQ_Employee_MobileNo UNIQUE(MobileNo);
+
+Table altered.
+
+SQL> ALTER TABLE Employee MODIFY City VARCHAR2(20) DEFAULT 'Hyderabad';
+
+Table altered.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT CHK_Employee_Gender
+  2  CHECK(Gender='Male' OR Gender='Female');
+
+Table altered.
+
+SQL> -- CHECK(Gender='Male' OR Gender='Female');
+SQL> -- CHECK(Gender IN('Male','Female'))
+SQL> ALTER TABLE Employee ADD DeptNo NUMBER(2);
+
+Table altered.
+
+SQL> DESC Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                     NOT NULL NUMBER(4)
+ EMPNAME                                   NOT NULL VARCHAR2(20)
+ EMPSAL                                             NUMBER(8,2)
+ EMPDESG                                            VARCHAR2(15)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(20)
+ GENDER                                             VARCHAR2(6)
+ DEPTNO                                             NUMBER(2)
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='EMPLOYEE';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+PK_EMPLOYEE_EMPID              P
+NN_EMPLOYEE_EMPNAME            C
+CHK_EMPLOYEE_EMPSAL            C
+UQ_EMPLOYEE_EMAILID            U
+UQ_EMPLOYEE_MOBILENO           U
+CHK_EMPLOYEE_GENDER            C
+
+6 rows selected.
+
+SQL> DESC Department;
+ERROR:
+ORA-04043: object Department does not exist
+
+
+SQL> CREATE TABLE Department
+  2  (DeptNo    NUMBER(2) CONSTRAINT PK_Department_DeptNo PRIMARY KEY
+  3  ,DeptName  VARCHAR2(20) NOT NULL
+  4  ,DeptLoc   VARCHAR2(20));
+
+Table created.
+
+SQL> INSERT INTO Department
+  2  (DeptNo,DeptName,DeptLoc)
+  3  VALUES
+  4  (10, 'IT','Hyderabad');
+
+1 row created.
+
+SQL> INSERT INTO Department
+  2  VALUES
+  3  (20,'ACCOUNTS','Bengaluru');
+
+1 row created.
+
+SQL> INSERT INTO Department
+  2  VALUES
+  3  (&DeptNo,'&DeptName','&DeptLoc');
+Enter value for deptno: 30
+Enter value for deptname: FINANCE
+Enter value for deptloc: Mumbai
+old   3: (&DeptNo,'&DeptName','&DeptLoc')
+new   3: (30,'FINANCE','Mumbai')
+
+1 row created.
+
+SQL> /
+Enter value for deptno: 40
+Enter value for deptname: HR
+Enter value for deptloc: Pune
+old   3: (&DeptNo,'&DeptName','&DeptLoc')
+new   3: (40,'HR','Pune')
+
+1 row created.
+
+SQL> SELECT * FROM Department;
+
+    DEPTNO DEPTNAME             DEPTLOC
+---------- -------------------- --------------------
+        10 IT                   Hyderabad
+        20 ACCOUNTS             Bengaluru
+        30 FINANCE              Mumbai
+        40 HR                   Pune
+
+SQL> SELECT * FROM Employee;
+
+     EMPID EMPNAME                  EMPSAL EMPDESG         EMAILID
+---------- -------------------- ---------- --------------- ---------------
+MOBILENO   CITY                 GENDER     DEPTNO
+---------- -------------------- ------ ----------
+      1001 Sameer                     8000 Programmer      sam@gmail.com
+9874563215 Mumbai               Male
+
+      1002 Naveen                     8000 Programmer      nav@gmail.com
+8874563215 Pune                 Male
+
+      1003 Pooja                      9000 Developer       puja@gmail.com
+           Hyderabad            Female
+
+
+     EMPID EMPNAME                  EMPSAL EMPDESG         EMAILID
+---------- -------------------- ---------- --------------- ---------------
+MOBILENO   CITY                 GENDER     DEPTNO
+---------- -------------------- ------ ----------
+      1004 Ajay                      12500 Manager         ajay@gmail.com
+6589321456 Bengaluru            Male
+
+      1005 Vamshi                     5000 Clerk           vam@gmail.com
+6589321458 Bengaluru            Male
+
+
+SQL> SET LINESIZE 200
+SQL> SELECT * FROM Employee;
+
+     EMPID EMPNAME                  EMPSAL EMPDESG         EMAILID         MOBILENO   CITY
+           GENDER     DEPTNO
+---------- -------------------- ---------- --------------- --------------- ---------- -------------------- ------ ----------
+      1001 Sameer                     8000 Programmer      sam@gmail.com   9874563215 Mumbai                  Male
+      1002 Naveen                     8000 Programmer      nav@gmail.com   8874563215 Pune
+           Male
+      1003 Pooja                      9000 Developer       puja@gmail.com             Hyderabad       Female
+      1004 Ajay                      12500 Manager         ajay@gmail.com  6589321456 Bengaluru       Male
+      1005 Vamshi                     5000 Clerk           vam@gmail.com   6589321458 Bengaluru       Male
+
+SQL> DELETE FROM Employee;
+
+5 rows deleted.
+
+SQL> SELECT * FROM Employee;
+
+no rows selected
+
+SQL> SELECT * FROM Department;
+
+    DEPTNO DEPTNAME             DEPTLOC
+---------- -------------------- --------------------
+        10 IT                   Hyderabad
+        20 ACCOUNTS             Bengaluru
+        30 FINANCE              Mumbai
+        40 HR                   Pune
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,City,Gender,DeptNo)
+  3  VALUES
+  4  (1001,'Sameer',8000,'Programmer','sameer@gmail.com','9876756545','Mumbai','Male',10);
+(1001,'Sameer',8000,'Programmer','sameer@gmail.com','9876756545','Mumbai','Male',10)
+                                 *
+ERROR at line 4:
+ORA-12899: value too large for column "SCOTT"."EMPLOYEE"."EMAILID" (actual: 16, maximum: 15)
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,City,Gender,DeptNo)
+  3  VALUES
+  4* (1001,'Sameer',8000,'Programmer','sam@gmail.com','9876756545','Mumbai','Male',10)
+SQL> /
+
+1 row created.
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,City,Gender,DeptNo)
+  3  VALUES
+  4  (1002,'Sunil',5000,'Clerk','sunil@gmail.com','8876756545','Pune','Male',50);
+
+1 row created.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT FK_Employee_DeptNo
+  2  FOREIGN KEY(DeptNo) REFERENCES Department(DeptNo);
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_DeptNo
+                                    *
+ERROR at line 1:
+ORA-02298: cannot validate (SCOTT.FK_EMPLOYEE_DEPTNO) - parent keys not found
+
+
+SQL> DELETE FROM Employee WHERE EmpId=1002;
+
+1 row deleted.
+
+SQL> ALTER TABLE Employee ADD CONSTRAINT FK_Employee_DeptNo
+  2  FOREIGN KEY(DeptNo) REFERENCES Department(DeptNo);
+
+Table altered.
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,City,Gender,DeptNo)
+  3  VALUES
+  4  (1002,'Sunil',5000,'Clerk','sunil@gmail.com','8876756545','Pune','Male',50);
+INSERT INTO Employee
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.FK_EMPLOYEE_DEPTNO) violated - parent key not found
+
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,City,Gender,DeptNo)
+  3  VALUES
+  4  (1002,'Sunil',5000,'Clerk','sunil@gmail.com','8876756545','Pune','Male',20);
+
+1 row created.
+
+SQL> SELECT * FROM Employee;
+
+     EMPID EMPNAME                  EMPSAL EMPDESG         EMAILID         MOBILENO   CITY
+           GENDER     DEPTNO
+---------- -------------------- ---------- --------------- --------------- ---------- -------------------- ------ ----------
+      1001 Sameer                     8000 Programmer      sam@gmail.com   9876756545 Mumbai                  Male           10
+      1002 Sunil                      5000 Clerk           sunil@gmail.com 8876756545 Pune
+           Male           20
+
+SQL> DELETE FROM Department WHERE DeptNo=10;
+DELETE FROM Department WHERE DeptNo=10
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.FK_EMPLOYEE_DEPTNO) violated - child record found
+
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,DeptNo)
+  3  VALUES
+  4  (1003,'Simran',9000,'Analyst','sim@gmail.com','6876756545',20);
+
+1 row created.
+
+SQL> SELECT EmpId,EmpName,EmpSal,City,Gender,DeptNo FROM Employee;
+
+     EMPID EMPNAME                  EMPSAL CITY                 GENDER     DEPTNO
+---------- -------------------- ---------- -------------------- ------ ----------
+      1001 Sameer                     8000 Mumbai               Male           10
+      1002 Sunil                      5000 Pune                 Male           20
+      1003 Simran                     9000 Hyderabad                           20
+
+SQL> INSERT INTO Employee
+  2  VALUES
+  3  (1004,'Vamshi',28000,'Manager','vam_s@gmail.com','9606756545',20);
+INSERT INTO Employee
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,DeptNo)
+  3  VALUES
+  4  (1004,'Vamshi',28000,'Manager','vam_s@gmail.com','9606756545',20);
+INSERT INTO Employee
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.CHK_EMPLOYEE_EMPSAL) violated
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,Gender,DeptNo)
+  3  VALUES
+  4* (1004,'Vamshi',20000,'Manager','vam_s@gmail.com','9606756545','Mael',20)
+SQL> /
+INSERT INTO Employee
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.CHK_EMPLOYEE_GENDER) violated
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  INSERT INTO Employee
+  2  (EmpID,EmpName,EmpSal,EmpDesg,EmailId,MobileNo,Gender,DeptNo)
+  3  VALUES
+  4* (1004,'Vamshi',20000,'Manager','vam_s@gmail.com','9606756545','Male',20)
+SQL> /
+
+1 row created.
+
+SQL>

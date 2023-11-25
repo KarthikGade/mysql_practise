@@ -1,0 +1,422 @@
+
+SQL> DESC Student;
+ERROR:
+ORA-04043: object Student does not exist
+
+
+SQL> DESC tblStudent;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(4)
+ NAME                                               VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> CREATE TABLE Student
+  2  (ID        NUMBER(4)   PRIMARY KEY
+  3  ,Name      VARCHAR2(20) NOT NULL
+  4  ,EmailID   VARCHAR2(15) UNIQUE
+  5  ,MobileNo  VARCHAR2(10) UNIQUE
+  6  ,City      VARCHAR2(15)
+  7  ,Gender    VARCHAR2(6));
+
+Table created.
+
+SQL> INSERT INTO tblStudent
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1001,'Sameer','sameer@gmail.com','9658362545','Hyderabad','Male');
+
+1 row created.
+
+SQL> INSERT INTO tblStudent
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1001,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+
+1 row created.
+
+SQL> INSERT INTO tblStudent
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (NULL,'Ajay','ajay@gmail.com','8658362545','Mumbai','Male');
+
+1 row created.
+
+SQL> SELECT * FROM tblStudent;
+
+        ID NAME                 EMAILID              MOBILENO   CITY
+---------- -------------------- -------------------- ---------- ---------------
+GENDER
+------
+      1001 Sameer               sameer@gmail.com     9658362545 Hyderabad
+Male
+
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai
+Male
+
+           Ajay                 ajay@gmail.com       8658362545 Mumbai
+Male
+
+
+SQL> SET LINESIZE 200
+SQL> SELECT * FROM tblStudent;
+
+        ID NAME                 EMAILID              MOBILENO   CITY            GENDER
+---------- -------------------- -------------------- ---------- --------------- ------
+      1001 Sameer               sameer@gmail.com     9658362545 Hyderabad       Male
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai          Male
+           Ajay                 ajay@gmail.com       8658362545 Mumbai          Male
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1001,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+
+1 row created.
+
+SQL> INSERT INTO tblStudent
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1001,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+
+1 row created.
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1001,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+INSERT INTO Student
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C009711) violated
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (NULL,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+(NULL,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male')
+ *
+ERROR at line 4:
+ORA-01400: cannot insert NULL into ("SCOTT"."STUDENT"."ID")
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1002,NULL,'sunil@gmail.com','8658362545','Mumbai','Male');
+(1002,NULL,'sunil@gmail.com','8658362545','Mumbai','Male')
+      *
+ERROR at line 4:
+ORA-01400: cannot insert NULL into ("SCOTT"."STUDENT"."NAME")
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1002,'Sunil','sunil@gmail.com','8658362545','Mumbai','Male');
+INSERT INTO Student
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C009712) violated
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1002,'Sunil','sunil_001@gmail.com','8658362545','Mumbai','Male');
+(1002,'Sunil','sunil_001@gmail.com','8658362545','Mumbai','Male')
+              *
+ERROR at line 4:
+ORA-12899: value too large for column "SCOTT"."STUDENT"."EMAILID" (actual: 19, maximum: 15)
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1002,'Sunil','sun@gmail.com','8658362545','Mumbai','Male');
+INSERT INTO Student
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C009713) violated
+
+
+SQL> INSERT INTO Student
+  2  (ID,Name,EmailId,MobileNo,City,Gender)
+  3  VALUES
+  4  (1002,'Sunil','sun@gmail.com','8658362541','Mumbai','Male');
+
+1 row created.
+
+SQL> SELECT * FROM Student;
+
+        ID NAME                 EMAILID         MOBILENO   CITY            GENDER
+---------- -------------------- --------------- ---------- --------------- ------
+      1001 Sunil                sunil@gmail.com 8658362545 Mumbai          Male
+      1002 Sunil                sun@gmail.com   8658362541 Mumbai          Male
+
+SQL> SELECT * FROM tblStudent;
+
+        ID NAME                 EMAILID              MOBILENO   CITY            GENDER
+---------- -------------------- -------------------- ---------- --------------- ------
+      1001 Sameer               sameer@gmail.com     9658362545 Hyderabad       Male
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai          Male
+           Ajay                 ajay@gmail.com       8658362545 Mumbai          Male
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai          Male
+
+SQL> ALTER TABLE tblStudent ADD PRIMARY KEY(ID);
+ALTER TABLE tblStudent ADD PRIMARY KEY(ID)
+                                       *
+ERROR at line 1:
+ORA-01449: column contains NULL values; cannot alter to NOT NULL
+
+
+SQL> UPDATE tblStudent SET ID=1002 WHERE Name='Ajay';
+
+1 row updated.
+
+SQL> SELECT * FROM tblStudent;
+
+        ID NAME                 EMAILID              MOBILENO   CITY            GENDER
+---------- -------------------- -------------------- ---------- --------------- ------
+      1001 Sameer               sameer@gmail.com     9658362545 Hyderabad       Male
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai          Male
+      1002 Ajay                 ajay@gmail.com       8658362545 Mumbai          Male
+      1001 Sunil                sunil@gmail.com      8658362545 Mumbai          Male
+
+SQL> ALTER TABLE tblStudent ADD PRIMARY KEY(ID);
+ALTER TABLE tblStudent ADD PRIMARY KEY(ID)
+*
+ERROR at line 1:
+ORA-02437: cannot validate (SCOTT.SYS_C009714) - primary key violated
+
+
+SQL> DELETE FROM tblStudent WHERE Name='Sunil';
+
+2 rows deleted.
+
+SQL> SELECT * FROM tblStudent;
+
+        ID NAME                 EMAILID              MOBILENO   CITY            GENDER
+---------- -------------------- -------------------- ---------- --------------- ------
+      1001 Sameer               sameer@gmail.com     9658362545 Hyderabad       Male
+      1002 Ajay                 ajay@gmail.com       8658362545 Mumbai          Male
+
+SQL> ALTER TABLE tblStudent ADD PRIMARY KEY(ID);
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent MODIFY NAME VARCHAR2(20) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent ADD UNIQUE(EmailId);
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent ADD UNIQUE(MobileNo);
+
+Table altered.
+
+SQL> --ALTER TABLE tblStudent DROP CONSTRAINT ConstraintName;
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS;
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+SYS_C009648                    C TBLEMPLOYEE
+SYS_C009649                    C TBLEMPLOYEE
+SYS_C009650                    C TBLEMPLOYEE
+SYS_C009655                    C EMPLOYEE
+SYS_C009656                    C EMPLOYEE
+SYS_C009659                    C EMPLOYEE
+BIN$4AjVYBhiSTuum+AYboxtgQ==$0 C BIN$TixNoUzbT/ycvMyjNtclIw==$0
+BIN$sMF5Qn12Qk6CvYMc8NOqSA==$0 C BIN$TixNoUzbT/ycvMyjNtclIw==$0
+BIN$A9JMDO51QtCmruIP2CDa8g==$0 C BIN$TixNoUzbT/ycvMyjNtclIw==$0
+SYS_C009672                    O VW_EMP
+SYS_C009673                    V CHKVIEW
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+SYS_C009710                    C STUDENT
+SYS_C009716                    C TBLSTUDENT
+FK_DEPTNO                      R EMP
+PK_DEPT                        P DEPT
+PK_EMP                         P EMP
+SYS_C009651                    P TBLEMPLOYEE
+SYS_C009652                    U TBLEMPLOYEE
+SYS_C009653                    U TBLEMPLOYEE
+SYS_C009654                    P EMPLOYEE
+SYS_C009657                    U EMPLOYEE
+SYS_C009658                    U EMPLOYEE
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+BIN$FOq65sBzT/qc2ywd0ZDQuA==$0 P BIN$TixNoUzbT/ycvMyjNtclIw==$0
+BIN$Foong8LgSNe5nvnGYXrNjg==$0 U BIN$TixNoUzbT/ycvMyjNtclIw==$0
+BIN$9TCh96riSrqXGkEyZA6tgw==$0 U BIN$TixNoUzbT/ycvMyjNtclIw==$0
+SYS_C009711                    P STUDENT
+SYS_C009712                    U STUDENT
+SYS_C009713                    U STUDENT
+SYS_C009715                    P TBLSTUDENT
+SYS_C009717                    U TBLSTUDENT
+SYS_C009718                    U TBLSTUDENT
+
+31 rows selected.
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='TBLSTUDENT';
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+SYS_C009715                    P TBLSTUDENT
+SYS_C009716                    C TBLSTUDENT
+SYS_C009717                    U TBLSTUDENT
+SYS_C009718                    U TBLSTUDENT
+
+SQL> ALTER TABLE tblStudent DROP CONSTRAINT SYS_C009715;
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent DROP CONSTRAINT SYS_C009716;
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent DROP CONSTRAINT SYS_C009717;
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent DROP CONSTRAINT SYS_C009718;
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='TBLSTUDENT';
+
+no rows selected
+
+SQL> ALTER TABLE tblStudent ADD CONSTRAINT PK_tblStudent_Id PRIMARY KEY(ID);
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent ADD CONSTRAINT UQ_tblStudent_EmailId UNIQUE(EmailId);
+
+Table altered.
+
+SQL> ALTER TABLE tblStudent ADD CONSTRAINT UQ_tblStudent_MobileNo UNIQUE(MobileNo);
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='TBLSTUDENT';
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+PK_TBLSTUDENT_ID               P TBLSTUDENT
+UQ_TBLSTUDENT_EMAILID          U TBLSTUDENT
+UQ_TBLSTUDENT_MOBILENO         U TBLSTUDENT
+
+SQL> ALTER TABLE tblStudent MODIFY Name VARCHAR2(20) CONSTRAINT NN_tblStudent_Name NOT NULL;
+
+Table altered.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Student_01
+  2      (ID        NUMBER(4)    CONSTRAINT PK_Student_01_ID       PRIMARY KEY
+  3      ,Name      VARCHAR2(20) CONSTRAINT NN_Student_01_Name     NOT NULL
+  4      ,EmailID   VARCHAR2(15) CONSTRAINT UQ_Student_01_EmailID  UNIQUE
+  5      ,MobileNo  VARCHAR2(10) CONSTRAINT UQ_Student_01_MobileNo UNIQUE
+  6      ,City      VARCHAR2(15)
+  7*     ,Gender    VARCHAR2(6));
+SQL> /
+    ,Gender    VARCHAR2(6));
+                           *
+ERROR at line 7:
+ORA-00911: invalid character
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Student_01
+  2      (ID        NUMBER(4)    CONSTRAINT PK_Student_01_ID       PRIMARY KEY
+  3      ,Name      VARCHAR2(20) CONSTRAINT NN_Student_01_Name     NOT NULL
+  4      ,EmailID   VARCHAR2(15) CONSTRAINT UQ_Student_01_EmailID  UNIQUE
+  5      ,MobileNo  VARCHAR2(10) CONSTRAINT UQ_Student_01_MobileNo UNIQUE
+  6      ,City      VARCHAR2(15)
+  7*     ,Gender    VARCHAR2(6))
+SQL> /
+
+Table created.
+
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS
+  2  WHERE TABLE_NAME='STUDENT_01';
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+NN_STUDENT_01_NAME             C STUDENT_01
+PK_STUDENT_01_ID               P STUDENT_01
+UQ_STUDENT_01_EMAILID          U STUDENT_01
+UQ_STUDENT_01_MOBILENO         U STUDENT_01
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,TABLE_NAME FROM USER_CONSTRAINTS
+  2* WHERE TABLE_NAME='STUDENT_01'
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Student_02
+  2          (ID        NUMBER(4)
+  3          ,Name      VARCHAR2(20) NOT NULL
+  4          ,EmailID   VARCHAR2(15)
+  5          ,MobileNo  VARCHAR2(10)
+  6          ,City      VARCHAR2(15)
+  7          ,Gender    VARCHAR2(6)
+  8     ,PRIMARY KEY(ID)
+  9     ,UNIQUE(EmailId)
+ 10*    ,UNIQUE(MobileNo))
+SQL> /
+
+Table created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Student_03
+  2          (ID        NUMBER(4)
+  3          ,Name      VARCHAR2(20) NOT NULL
+  4          ,EmailID   VARCHAR2(15)
+  5          ,MobileNo  VARCHAR2(10)
+  6          ,City      VARCHAR2(15)
+  7          ,Gender    VARCHAR2(6)
+  8     ,CONSTRAINT PK_Student_03_ID PRIMARY KEY(ID)
+  9     ,CONSTRAINT UQ_Student_03_EmailId UNIQUE(EmailId)
+ 10*    ,CONSTRAINT UQ_Student_04_MobileNo UNIQUE(MobileNo))
+SQL> /
+
+Table created.
+
+User_Constraints
+================
+
+Constraint_Name		Constraint_Type		Table_Name
+===============		===============		==========
+SYS_C001455		P			TBLSTUDENT
+SYS_C001456		C			TBLSTUDENT
+SYS_C001457		U			TBLSTUDENT
+SYS_C001458		U			TBLSTUDENT
+SYS_C001459		P			STUDENT
+SYS_C001460		C			STUDENT
+SYS_C001461		U			STUDENT
+SYS_C001462		U			STUDENT
+
+
+
+SELECT Constraint_Name, Constraint_Type, Table_Name FROM User_Constraints
+WHERE Table_Name='TBLSTUDENT'

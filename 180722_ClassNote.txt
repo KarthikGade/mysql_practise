@@ -1,0 +1,317 @@
+
+SQL*Plus: Release 11.1.0.6.0 - Production on Sun Jul 17 10:47:57 2022
+
+Copyright (c) 1982, 2007, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+ERROR:
+ORA-28002: the password will expire within 2 days
+
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.1.0.6.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> CREATE TABLE Student
+  2  (StudentId         NUMBER(4)
+  3  ,StudentName       VARCHAR2(20)
+  4  ,EmailId           VARCHAR2(15)
+  5  ,MobileNo          NUMBER(10)
+  6  );
+CREATE TABLE Student
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> DROP TABLE Student;
+
+Table dropped.
+
+SQL> CREATE TABLE Student
+  2  (StudentId         NUMBER(4)
+  3  ,StudentName       VARCHAR2(20)
+  4  ,EmailId           VARCHAR2(15)
+  5  ,MobileNo          NUMBER(10));
+
+Table created.
+
+SQL> DESCRIBE Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           NUMBER(10)
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           NUMBER(10)
+
+SQL> ALTER TABLE Student ADD City VARCHAR2(15);
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           NUMBER(10)
+ CITY                                               VARCHAR2(15)
+
+SQL> ALTER TABLE Student ADD(Gender VARCHAR2(6), AdmissionNo NUMBER(5));
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           NUMBER(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+ ADMISSIONNO                                        NUMBER(5)
+
+SQL> ALTER TABLE Student DROP COLUMN AdmissionNo;
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(15)
+ MOBILENO                                           NUMBER(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> ALTER TABLE Student MODIFY EmailId VARCHAR2(20);
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           NUMBER(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> ALTER TABLE Student MODIFY MobileNo VARCHAR2(10);
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ STUDENTNAME                                        VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> ALTER TABLE Student RENAME COLUMN StudentName TO Name;
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                          NUMBER(4)
+ NAME                                               VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> ALTER TABLE Student RENAME COLUMN StudentID TO Id;
+
+Table altered.
+
+SQL> DESC Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(4)
+ NAME                                               VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> RENAME Student TO tblStudent;
+
+Table renamed.
+
+SQL> DESC Student;
+ERROR:
+ORA-04043: object Student does not exist
+
+
+SQL> DESC tblStudent;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(4)
+ NAME                                               VARCHAR2(20)
+ EMAILID                                            VARCHAR2(20)
+ MOBILENO                                           VARCHAR2(10)
+ CITY                                               VARCHAR2(15)
+ GENDER                                             VARCHAR2(6)
+
+SQL> SELECT * FROM tblStudent;
+
+no rows selected
+
+SQL> SELECT * FROM Dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> CREATE TABLE DeptCopy AS SELECT * FROM Dept;
+
+Table created.
+
+SQL> SELECT * FROM DeptCopy;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> TRUNCATE TABLE DeptCopy;
+
+Table truncated.
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> ROLLBACK
+  2  ;
+
+Rollback complete.
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> SELECT * FROM Dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> DELETE FROM Dept;
+DELETE FROM Dept
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.FK_DEPTNO) violated - child record found
+
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> INSERT INTO DeptCopy SELECT * FROM Dept;
+
+4 rows created.
+
+SQL> SELECT * FROM DeptCopy;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> DELETE FROM DeptCopy;
+
+4 rows deleted.
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> INSERT INTO DeptCopy SELECT * FROM Dept;
+
+4 rows created.
+
+SQL> SELECT * FROM DeptCopy;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM DeptCopy;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> DELETE FROM DeptCopy;
+
+4 rows deleted.
+
+SQL> SELECT * FROM DeptCopy;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM DeptCopy;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL>

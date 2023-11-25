@@ -1,0 +1,790 @@
+
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      5555 Naveen     Analyst
+        10
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4500        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+      1221 Naveen     Analyst
+        10
+
+      1342 JOHN       CLERK
+
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      1356 xyz
+        20
+
+
+16 rows selected.
+
+SQL> SET LINESIZE 200
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                                      10
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4500        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      1221 Naveen     Analyst                                                      10
+      1342 JOHN       CLERK
+      1356 xyz                                                                     20
+
+16 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7566 JONES      MANAGER         2975         20
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7788 SCOTT      ANALYST         3000         20
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7876 ADAMS      CLERK           1100         20
+      7900 JAMES      CLERK            950         30
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7902 FORD       ANALYST         3000         20
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+      1342 JOHN       CLERK
+      1356 xyz                                     20
+
+16 rows selected.
+
+SQL> SELECT EmpNo AS No, Ename AS Name, Job, Sal AS Salary, DeptNo FROM Emp;
+
+        NO NAME       JOB           SALARY     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7566 JONES      MANAGER         2975         20
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7788 SCOTT      ANALYST         3000         20
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7876 ADAMS      CLERK           1100         20
+      7900 JAMES      CLERK            950         30
+
+        NO NAME       JOB           SALARY     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7902 FORD       ANALYST         3000         20
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+      1342 JOHN       CLERK
+      1356 xyz                                     20
+
+16 rows selected.
+
+SQL> SELECT EmpNo No, Ename Name, Job, Sal Salary, DeptNo FROM Emp;
+
+        NO NAME       JOB           SALARY     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7566 JONES      MANAGER         2975         20
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7788 SCOTT      ANALYST         3000         20
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7876 ADAMS      CLERK           1100         20
+      7900 JAMES      CLERK            950         30
+
+        NO NAME       JOB           SALARY     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7902 FORD       ANALYST         3000         20
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+      1342 JOHN       CLERK
+      1356 xyz                                     20
+
+16 rows selected.
+
+SQL> SELECT EmpNo AS No, Ename AS Name, Job,
+  2  Sal AS OldSal
+  3  ,Sal*.1 AS Hike
+  4  ,Sal+(Sal*.1) AS NewSal
+  5  FROM Emp;
+
+        NO NAME       JOB           OLDSAL       HIKE     NEWSAL
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst
+      7499 ALLEN      SALESMAN        4500        450       4950
+      7521 WARD       SALESMAN        1250        125       1375
+      7566 JONES      MANAGER         2975      297.5     3272.5
+      7698 BLAKE      MANAGER         2850        285       3135
+      7782 CLARK      MANAGER         2450        245       2695
+      7788 SCOTT      ANALYST         3000        300       3300
+      7839 KING       PRESIDENT       5000        500       5500
+      7844 TURNER     SALESMAN        1500        150       1650
+      7876 ADAMS      CLERK           1100        110       1210
+      7900 JAMES      CLERK            950         95       1045
+
+        NO NAME       JOB           OLDSAL       HIKE     NEWSAL
+---------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         3000        300       3300
+      7934 MILLER     CLERK           1300        130       1430
+      1221 Naveen     Analyst
+      1342 JOHN       CLERK
+      1356 xyz
+
+16 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT EmpNo AS No, Ename AS Name, Job,
+  2  Sal AS OldSal
+  3  ,Sal*.1
+  4  ,Sal+(Sal*.1)
+  5* FROM Emp
+SQL> /
+
+        NO NAME       JOB           OLDSAL     SAL*.1 SAL+(SAL*.1)
+---------- ---------- --------- ---------- ---------- ------------
+      5555 Naveen     Analyst
+      7499 ALLEN      SALESMAN        4500        450         4950
+      7521 WARD       SALESMAN        1250        125         1375
+      7566 JONES      MANAGER         2975      297.5       3272.5
+      7698 BLAKE      MANAGER         2850        285         3135
+      7782 CLARK      MANAGER         2450        245         2695
+      7788 SCOTT      ANALYST         3000        300         3300
+      7839 KING       PRESIDENT       5000        500         5500
+      7844 TURNER     SALESMAN        1500        150         1650
+      7876 ADAMS      CLERK           1100        110         1210
+      7900 JAMES      CLERK            950         95         1045
+
+        NO NAME       JOB           OLDSAL     SAL*.1 SAL+(SAL*.1)
+---------- ---------- --------- ---------- ---------- ------------
+      7902 FORD       ANALYST         3000        300         3300
+      7934 MILLER     CLERK           1300        130         1430
+      1221 Naveen     Analyst
+      1342 JOHN       CLERK
+      1356 xyz
+
+16 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7566 JONES      MANAGER         2975         20
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7788 SCOTT      ANALYST         3000         20
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7876 ADAMS      CLERK           1100         20
+      7900 JAMES      CLERK            950         30
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7902 FORD       ANALYST         3000         20
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+      1342 JOHN       CLERK
+      1356 xyz                                     20
+
+16 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE DeptNo=20;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7566 JONES      MANAGER         2975         20
+      7788 SCOTT      ANALYST         3000         20
+      7876 ADAMS      CLERK           1100         20
+      7902 FORD       ANALYST         3000         20
+      1356 xyz                                     20
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE DeptNo!=20;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7900 JAMES      CLERK            950         30
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+
+10 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE DeptNo<>20;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7698 BLAKE      MANAGER         2850         30
+      7782 CLARK      MANAGER         2450         10
+      7839 KING       PRESIDENT       5000         10
+      7844 TURNER     SALESMAN        1500         30
+      7900 JAMES      CLERK            950         30
+      7934 MILLER     CLERK           1300         10
+      1221 Naveen     Analyst                      10
+
+10 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE Job='salesman';
+
+no rows selected
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE Job='SALESMAN';
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500         30
+      7521 WARD       SALESMAN        1250         30
+      7844 TURNER     SALESMAN        1500         30
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo FROM Emp WHERE Job='Analyst';
+
+     EMPNO ENAME      JOB              SAL     DEPTNO
+---------- ---------- --------- ---------- ----------
+      5555 Naveen     Analyst                      10
+      1221 Naveen     Analyst                      10
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+      1356 xyz                                                20
+
+16 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp WHERE Comm=NULL;
+
+no rows selected
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp WHERE Comm=null;
+
+no rows selected
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp WHERE Comm IS NULL;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      1342 JOHN       CLERK
+      1356 xyz                                                20
+
+13 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp WHERE Comm IS NOT NULL;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7844 TURNER     SALESMAN        1500          0         30
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal>=2000 AND Sal<=5000;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7902 FORD       ANALYST         3000                    20
+
+7 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal>=2000 AND Sal<=3000;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7902 FORD       ANALYST         3000                    20
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal<2000 OR Sal>3000;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7934 MILLER     CLERK           1300                    10
+
+7 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal BETWEEN 2000 AND 3000;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7902 FORD       ANALYST         3000                    20
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal NOT BETWEEN 2000 AND 3000;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7934 MILLER     CLERK           1300                    10
+
+7 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job='CLERK' AND DeptNo=10;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           1300                    10
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job='CLERK' OR DeptNo=10;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7782 CLARK      MANAGER         2450                    10
+      7839 KING       PRESIDENT       5000                    10
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+
+8 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job='Analyst' AND Job='SALESMAN';
+
+no rows selected
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job='Analyst' OR Job='SALESMAN';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7844 TURNER     SALESMAN        1500          0         30
+      1221 Naveen     Analyst                                 10
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job IN('Analyst', 'SALESMAN', 'CLERK');
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+
+9 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job NOT IN('Analyst', 'SALESMAN', 'CLERK');
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7902 FORD       ANALYST         3000                    20
+
+6 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp ;
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+      1356 xyz                                                20
+
+16 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename LIKE 'J%';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7900 JAMES      CLERK            950                    30
+      1342 JOHN       CLERK
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename LIKE 'JO%';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      1342 JOHN       CLERK
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename LIKE 'J____';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7900 JAMES      CLERK            950                    30
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename LIKE 'J%S';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         2975                    20
+      7900 JAMES      CLERK            950                    30
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename LIKE '%A%';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+
+6 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Ename NOT LIKE '%A%';
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7566 JONES      MANAGER         2975                    20
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+      1356 xyz                                                20
+
+10 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Job =ANY('Analyst', 'SALESMAN', 'CLERK');
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                 10
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7934 MILLER     CLERK           1300                    10
+      1221 Naveen     Analyst                                 10
+      1342 JOHN       CLERK
+
+9 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal =ANY(3000,4500,1100);
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7788 SCOTT      ANALYST         3000                    20
+      7876 ADAMS      CLERK           1100                    20
+      7902 FORD       ANALYST         3000                    20
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal <ANY(3000,4500,1100);
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7521 WARD       SALESMAN        1250        500         30
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7844 TURNER     SALESMAN        1500          0         30
+      7876 ADAMS      CLERK           1100                    20
+      7900 JAMES      CLERK            950                    30
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+
+10 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal >ANY(3000,4500,1100);
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        4500        300         30
+      7521 WARD       SALESMAN        1250        500         30
+      7566 JONES      MANAGER         2975                    20
+      7698 BLAKE      MANAGER         2850                    30
+      7782 CLARK      MANAGER         2450                    10
+      7788 SCOTT      ANALYST         3000                    20
+      7839 KING       PRESIDENT       5000                    10
+      7844 TURNER     SALESMAN        1500          0         30
+      7902 FORD       ANALYST         3000                    20
+      7934 MILLER     CLERK           1300                    10
+
+10 rows selected.
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal >ALL(3000,4500,1100);
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT       5000                    10
+
+SQL> SELECT EmpNo,Ename,Job,Sal,Comm,DeptNo FROM Emp
+  2  WHERE Sal <ALL(3000,4500,1100);
+
+     EMPNO ENAME      JOB              SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- ---------- ----------
+      7900 JAMES      CLERK            950                    30
+
+SQL> --SELECT * FROM Emp;
+SQL> DELETE * FROM Emp;
+DELETE * FROM Emp
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> DELETE  FROM Emp;
+
+16 rows deleted.
+
+SQL> SELECT * FROM Emp;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      5555 Naveen     Analyst                                                      10
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4500        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      1221 Naveen     Analyst                                                      10
+      1342 JOHN       CLERK
+      1356 xyz                                                                     20
+
+16 rows selected.
+
+SQL> DELETE  FROM Emp WHERE DeptNo=10;
+
+5 rows deleted.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> UPDATE Emp SET COMM=300;
+
+16 rows updated.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> UPDATE Emp SET COMM=300 WHERE Job='SALESMAN';
+
+3 rows updated.
+
+SQL> UPDATE Emp SET COMM=300,Sal=Sal+(Sal*.1) WHERE Job='SALESMAN';
+
+3 rows updated.
+
+SQL> SELECT * FROM Emp WHERE Job='SALESMAN';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+
+SQL>

@@ -1,0 +1,406 @@
+
+SQL> --ROW_NUMBER(), RANK(), DENSE_RANK()
+SQL> --ROLLUP(), CUBE()
+SQL> SET LINESIZE 200
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+12 rows selected.
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal FROM Emp
+  2  GROUP BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL
+---------- ---------- ----------
+        30          5      11775
+        20          4      10075
+        10          3       8750
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal FROM Emp
+  2  GROUP BY DeptNo ORDER BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL
+---------- ---------- ----------
+        10          3       8750
+        20          4      10075
+        30          5      11775
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal FROM Emp
+  2  GROUP BY ROLLUP(DeptNo) ORDER BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL
+---------- ---------- ----------
+        10          3       8750
+        20          4      10075
+        30          5      11775
+                   12      30600
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal, MAX(Sal) AS MaxSal
+  2  FROM Emp GROUP BY ROLLUP(DeptNo) ORDER BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL     MAXSAL
+---------- ---------- ---------- ----------
+        10          3       8750       5000
+        20          4      10075       3000
+        30          5      11775       4950
+                   12      30600       5000
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal, MAX(Sal) AS MaxSal
+  2  ,MIN(Sal) AS MinSal, AVG(Sal) AS AvgSal FROM Emp GROUP BY ROLLUP(DeptNo)
+  3  ORDER BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL     MAXSAL     MINSAL     AVGSAL
+---------- ---------- ---------- ---------- ---------- ----------
+        10          3       8750       5000       1300 2916.66667
+        20          4      10075       3000       1100    2518.75
+        30          5      11775       4950        950       2355
+                   12      30600       5000        950       2550
+
+SQL> SELECT DeptNo,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal, MAX(Sal) AS MaxSal
+  2  ,MIN(Sal) AS MinSal, AVG(Sal) AS AvgSal FROM Emp GROUP BY CUBE(DeptNo)
+  3  ORDER BY DeptNo;
+
+    DEPTNO   NOOFEMPS   TOTALSAL     MAXSAL     MINSAL     AVGSAL
+---------- ---------- ---------- ---------- ---------- ----------
+        10          3       8750       5000       1300 2916.66667
+        20          4      10075       3000       1100    2518.75
+        30          5      11775       4950        950       2355
+                   12      30600       5000        950       2550
+
+SQL> SELECT * FROM Emp ORDER BY DeptNo;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+12 rows selected.
+
+SQL> SELECT  DeptNo,Job,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal FROM Emp
+  2  GROUP BY ROLLUP(DeptNo,Job) ORDER BY DeptNo;
+
+    DEPTNO JOB         NOOFEMPS   TOTALSAL
+---------- --------- ---------- ----------
+        10 CLERK              1       1300
+        10 MANAGER            1       2450
+        10 PRESIDENT          1       5000
+        10                    3       8750
+        20 ANALYST            2       6000
+        20 CLERK              1       1100
+        20 MANAGER            1       2975
+        20                    4      10075
+        30 CLERK              1        950
+        30 MANAGER            1       2850
+        30 SALESMAN           3       7975
+
+    DEPTNO JOB         NOOFEMPS   TOTALSAL
+---------- --------- ---------- ----------
+        30                    5      11775
+                             12      30600
+
+13 rows selected.
+
+SQL> SELECT  DeptNo,Job,COUNT(DeptNo) AS NoOfEmps, SUM(Sal) AS TotalSal FROM Emp
+  2  GROUP BY CUBE(DeptNo,Job) ORDER BY DeptNo;
+
+    DEPTNO JOB         NOOFEMPS   TOTALSAL
+---------- --------- ---------- ----------
+        10 CLERK              1       1300
+        10 MANAGER            1       2450
+        10 PRESIDENT          1       5000
+        10                    3       8750
+        20 ANALYST            2       6000
+        20 CLERK              1       1100
+        20 MANAGER            1       2975
+        20                    4      10075
+        30 CLERK              1        950
+        30 MANAGER            1       2850
+        30 SALESMAN           3       7975
+
+    DEPTNO JOB         NOOFEMPS   TOTALSAL
+---------- --------- ---------- ----------
+        30                    5      11775
+           ANALYST            2       6000
+           CLERK              3       3350
+           MANAGER            3       8275
+           PRESIDENT          1       5000
+           SALESMAN           3       7975
+                             12      30600
+
+18 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,ROW_NUMBER() OVER(ORDER BY Sal ASC) AS ROW_NUM
+  2  FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30          1
+      7876 ADAMS            1100 CLERK             20          2
+      7934 MILLER           1300 CLERK             10          3
+      7521 WARD             1375 SALESMAN          30          4
+      7844 TURNER           1650 SALESMAN          30          5
+      7782 CLARK            2450 MANAGER           10          6
+      7698 BLAKE            2850 MANAGER           30          7
+      7566 JONES            2975 MANAGER           20          8
+      7788 SCOTT            3000 ANALYST           20          9
+      7902 FORD             3000 ANALYST           20         10
+      7499 ALLEN            4950 SALESMAN          30         11
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10         12
+
+12 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,ROW_NUMBER() OVER(ORDER BY Sal DESC) AS ROW_NUM
+  2  FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7499 ALLEN            4950 SALESMAN          30          2
+      7788 SCOTT            3000 ANALYST           20          3
+      7902 FORD             3000 ANALYST           20          4
+      7566 JONES            2975 MANAGER           20          5
+      7698 BLAKE            2850 MANAGER           30          6
+      7782 CLARK            2450 MANAGER           10          7
+      7844 TURNER           1650 SALESMAN          30          8
+      7521 WARD             1375 SALESMAN          30          9
+      7934 MILLER           1300 CLERK             10         10
+      7876 ADAMS            1100 CLERK             20         11
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30         12
+
+12 rows selected.
+
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,
+  2  ROW_NUMBER() OVER(PARTITION BY DeptNo ORDER BY Sal DESC) AS ROW_NUM FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7782 CLARK            2450 MANAGER           10          2
+      7934 MILLER           1300 CLERK             10          3
+      7788 SCOTT            3000 ANALYST           20          1
+      7902 FORD             3000 ANALYST           20          2
+      7566 JONES            2975 MANAGER           20          3
+      7876 ADAMS            1100 CLERK             20          4
+      7499 ALLEN            4950 SALESMAN          30          1
+      7698 BLAKE            2850 MANAGER           30          2
+      7844 TURNER           1650 SALESMAN          30          3
+      7521 WARD             1375 SALESMAN          30          4
+
+     EMPNO ENAME             SAL JOB           DEPTNO    ROW_NUM
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30          5
+
+12 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,RANK() OVER(ORDER BY Sal DESC) AS RANK_NO
+  2  FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7499 ALLEN            4950 SALESMAN          30          2
+      7788 SCOTT            3000 ANALYST           20          3
+      7902 FORD             3000 ANALYST           20          3
+      7566 JONES            2975 MANAGER           20          5
+      7698 BLAKE            2850 MANAGER           30          6
+      7782 CLARK            2450 MANAGER           10          7
+      7844 TURNER           1650 SALESMAN          30          8
+      7521 WARD             1375 SALESMAN          30          9
+      7934 MILLER           1300 CLERK             10         10
+      7876 ADAMS            1100 CLERK             20         11
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30         12
+
+12 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,
+  2  RANK() OVER(PARTITION BY DeptNo ORDER BY Sal DESC) AS RANK_NO FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7782 CLARK            2450 MANAGER           10          2
+      7934 MILLER           1300 CLERK             10          3
+      7788 SCOTT            3000 ANALYST           20          1
+      7902 FORD             3000 ANALYST           20          1
+      7566 JONES            2975 MANAGER           20          3
+      7876 ADAMS            1100 CLERK             20          4
+      7499 ALLEN            4950 SALESMAN          30          1
+      7698 BLAKE            2850 MANAGER           30          2
+      7844 TURNER           1650 SALESMAN          30          3
+      7521 WARD             1375 SALESMAN          30          4
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30          5
+
+12 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,DENSE_RANK() OVER(ORDER BY Sal DESC) AS RANK_NO
+  2  FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7499 ALLEN            4950 SALESMAN          30          2
+      7788 SCOTT            3000 ANALYST           20          3
+      7902 FORD             3000 ANALYST           20          3
+      7566 JONES            2975 MANAGER           20          4
+      7698 BLAKE            2850 MANAGER           30          5
+      7782 CLARK            2450 MANAGER           10          6
+      7844 TURNER           1650 SALESMAN          30          7
+      7521 WARD             1375 SALESMAN          30          8
+      7934 MILLER           1300 CLERK             10          9
+      7876 ADAMS            1100 CLERK             20         10
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30         11
+
+12 rows selected.
+
+SQL> SELECT EmpNo,Ename,Sal,Job,DeptNo,
+  2  DENSE_RANK() OVER(PARTITION BY DeptNo ORDER BY Sal DESC) AS RANK_NO FROM Emp;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7782 CLARK            2450 MANAGER           10          2
+      7934 MILLER           1300 CLERK             10          3
+      7788 SCOTT            3000 ANALYST           20          1
+      7902 FORD             3000 ANALYST           20          1
+      7566 JONES            2975 MANAGER           20          2
+      7876 ADAMS            1100 CLERK             20          3
+      7499 ALLEN            4950 SALESMAN          30          1
+      7698 BLAKE            2850 MANAGER           30          2
+      7844 TURNER           1650 SALESMAN          30          3
+      7521 WARD             1375 SALESMAN          30          4
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7900 JAMES             950 CLERK             30          5
+
+12 rows selected.
+
+SQL> SELECT * FROM
+  2  (SELECT EmpNo,Ename,Sal,Job,DeptNo,DENSE_RANK() OVER(ORDER BY Sal DESC) AS RANK_NO
+  3  FROM Emp)
+  4  WHERE RANK_NO<=2;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7499 ALLEN            4950 SALESMAN          30          2
+
+SQL> SELECT EmpNo,Ename,OldSal,Hike FROM
+  2  (SELECT EmpNo,Ename,Sal as OldSal, Sal*.1 AS  HIKE, DeptNo, Job FROM Emp)
+  3  ;
+
+     EMPNO ENAME          OLDSAL       HIKE
+---------- ---------- ---------- ----------
+      7499 ALLEN            4950        495
+      7521 WARD             1375      137.5
+      7566 JONES            2975      297.5
+      7698 BLAKE            2850        285
+      7782 CLARK            2450        245
+      7788 SCOTT            3000        300
+      7839 KING             5000        500
+      7844 TURNER           1650        165
+      7876 ADAMS            1100        110
+      7900 JAMES             950         95
+      7902 FORD             3000        300
+
+     EMPNO ENAME          OLDSAL       HIKE
+---------- ---------- ---------- ----------
+      7934 MILLER           1300        130
+
+12 rows selected.
+
+SQL> SELECT * FROM
+  2  (SELECT EmpNo,Ename,Sal,Job,DeptNo,DENSE_RANK() OVER(ORDER BY Sal DESC) AS RANK_NO
+  3  FROM Emp)
+  4  WHERE RANK_NO=3;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7788 SCOTT            3000 ANALYST           20          3
+      7902 FORD             3000 ANALYST           20          3
+
+SQL> SELECT * FROM
+  2  (SELECT EmpNo,Ename,Sal,Job,DeptNo,DENSE_RANK() OVER(ORDER BY Sal DESC) AS RANK_NO
+  3  FROM Emp)
+  4  WHERE RANK_NO<=2;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7499 ALLEN            4950 SALESMAN          30          2
+
+SQL> SELECT * FROM
+  2  (SELECT EmpNo,Ename,Sal,Job,DeptNo,
+  3  DENSE_RANK() OVER(PARTITION BY DeptNo ORDER BY Sal DESC) AS RANK_NO FROM Emp)
+  4  WHERE RANK_NO<=2;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7839 KING             5000 PRESIDENT         10          1
+      7782 CLARK            2450 MANAGER           10          2
+      7788 SCOTT            3000 ANALYST           20          1
+      7902 FORD             3000 ANALYST           20          1
+      7566 JONES            2975 MANAGER           20          2
+      7499 ALLEN            4950 SALESMAN          30          1
+      7698 BLAKE            2850 MANAGER           30          2
+
+7 rows selected.
+
+SQL> SELECT * FROM
+  2  (SELECT EmpNo,Ename,Sal,Job,DeptNo,
+  3  DENSE_RANK() OVER(PARTITION BY DeptNo ORDER BY Sal DESC) AS RANK_NO FROM Emp)
+  4  WHERE RANK_NO=2;
+
+     EMPNO ENAME             SAL JOB           DEPTNO    RANK_NO
+---------- ---------- ---------- --------- ---------- ----------
+      7782 CLARK            2450 MANAGER           10          2
+      7566 JONES            2975 MANAGER           20          2
+      7698 BLAKE            2850 MANAGER           30          2
+
+SQL>

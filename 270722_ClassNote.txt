@@ -1,0 +1,387 @@
+
+SQL> --JOIN [EQUI OR INNER OR NATURAL, SELF, OUTER(LEFT, RIGHT, FULL), CROSS, NON-EQUI]
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+12 rows selected.
+
+SQL> SELECT * FROM Dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW DELHI
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        60 IT             HYDERABAD
+        22 HR             PUNE
+
+SQL> SELECT EmpNo,Ename,Job,Sal,DeptNo,Dname,Loc FROM Emp, Dept;
+SELECT EmpNo,Ename,Job,Sal,DeptNo,Dname,Loc FROM Emp, Dept
+                           *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT EmpNo,Ename,Job,Sal,Dept.DeptNo,Dname,Loc FROM Emp, Dept
+SQL> /
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7499 ALLEN      SALESMAN        4950         10 ACCOUNTING     NEW DELHI
+      7521 WARD       SALESMAN        1375         10 ACCOUNTING     NEW DELHI
+      7566 JONES      MANAGER         2975         10 ACCOUNTING     NEW DELHI
+      7698 BLAKE      MANAGER         2850         10 ACCOUNTING     NEW DELHI
+      7782 CLARK      MANAGER         2450         10 ACCOUNTING     NEW DELHI
+      7788 SCOTT      ANALYST         3000         10 ACCOUNTING     NEW DELHI
+      7839 KING       PRESIDENT       5000         10 ACCOUNTING     NEW DELHI
+      7844 TURNER     SALESMAN        1650         10 ACCOUNTING     NEW DELHI
+      7876 ADAMS      CLERK           1100         10 ACCOUNTING     NEW DELHI
+      7900 JAMES      CLERK            950         10 ACCOUNTING     NEW DELHI
+      7902 FORD       ANALYST         3000         10 ACCOUNTING     NEW DELHI
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7934 MILLER     CLERK           1300         10 ACCOUNTING     NEW DELHI
+      7499 ALLEN      SALESMAN        4950         20 RESEARCH       DALLAS
+      7521 WARD       SALESMAN        1375         20 RESEARCH       DALLAS
+      7566 JONES      MANAGER         2975         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         2850         20 RESEARCH       DALLAS
+      7782 CLARK      MANAGER         2450         20 RESEARCH       DALLAS
+      7788 SCOTT      ANALYST         3000         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT       5000         20 RESEARCH       DALLAS
+      7844 TURNER     SALESMAN        1650         20 RESEARCH       DALLAS
+      7876 ADAMS      CLERK           1100         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK            950         20 RESEARCH       DALLAS
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7902 FORD       ANALYST         3000         20 RESEARCH       DALLAS
+      7934 MILLER     CLERK           1300         20 RESEARCH       DALLAS
+      7499 ALLEN      SALESMAN        4950         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        1375         30 SALES          CHICAGO
+      7566 JONES      MANAGER         2975         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         2850         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         2450         30 SALES          CHICAGO
+      7788 SCOTT      ANALYST         3000         30 SALES          CHICAGO
+      7839 KING       PRESIDENT       5000         30 SALES          CHICAGO
+      7844 TURNER     SALESMAN        1650         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           1100         30 SALES          CHICAGO
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7900 JAMES      CLERK            950         30 SALES          CHICAGO
+      7902 FORD       ANALYST         3000         30 SALES          CHICAGO
+      7934 MILLER     CLERK           1300         30 SALES          CHICAGO
+      7499 ALLEN      SALESMAN        4950         60 IT             HYDERABAD
+      7521 WARD       SALESMAN        1375         60 IT             HYDERABAD
+      7566 JONES      MANAGER         2975         60 IT             HYDERABAD
+      7698 BLAKE      MANAGER         2850         60 IT             HYDERABAD
+      7782 CLARK      MANAGER         2450         60 IT             HYDERABAD
+      7788 SCOTT      ANALYST         3000         60 IT             HYDERABAD
+      7839 KING       PRESIDENT       5000         60 IT             HYDERABAD
+      7844 TURNER     SALESMAN        1650         60 IT             HYDERABAD
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7876 ADAMS      CLERK           1100         60 IT             HYDERABAD
+      7900 JAMES      CLERK            950         60 IT             HYDERABAD
+      7902 FORD       ANALYST         3000         60 IT             HYDERABAD
+      7934 MILLER     CLERK           1300         60 IT             HYDERABAD
+      7499 ALLEN      SALESMAN        4950         22 HR             PUNE
+      7521 WARD       SALESMAN        1375         22 HR             PUNE
+      7566 JONES      MANAGER         2975         22 HR             PUNE
+      7698 BLAKE      MANAGER         2850         22 HR             PUNE
+      7782 CLARK      MANAGER         2450         22 HR             PUNE
+      7788 SCOTT      ANALYST         3000         22 HR             PUNE
+      7839 KING       PRESIDENT       5000         22 HR             PUNE
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7844 TURNER     SALESMAN        1650         22 HR             PUNE
+      7876 ADAMS      CLERK           1100         22 HR             PUNE
+      7900 JAMES      CLERK            950         22 HR             PUNE
+      7902 FORD       ANALYST         3000         22 HR             PUNE
+      7934 MILLER     CLERK           1300         22 HR             PUNE
+
+60 rows selected.
+
+
+
+SQL> SELECT Emp.EmpNo,Emp.Ename,Emp.Job,Emp.Sal,Dept.DeptNo,Dept.Dname,Dept.Loc
+  2  FROM Emp, Dept
+  3  WHERE Emp.DeptNo=Dept.DeptNo;
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7499 ALLEN      SALESMAN        4950         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        1375         30 SALES          CHICAGO
+      7566 JONES      MANAGER         2975         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         2850         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         2450         10 ACCOUNTING     NEW DELHI
+      7788 SCOTT      ANALYST         3000         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT       5000         10 ACCOUNTING     NEW DELHI
+      7844 TURNER     SALESMAN        1650         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           1100         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK            950         30 SALES          CHICAGO
+      7902 FORD       ANALYST         3000         20 RESEARCH       DALLAS
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7934 MILLER     CLERK           1300         10 ACCOUNTING     NEW DELHI
+
+12 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT e.EmpNo,e.Ename,e.Job,e.Sal,d.DeptNo,d.Dname,d.Loc
+  2  FROM Emp e, Dept d
+  3* WHERE e.DeptNo=d.DeptNo
+SQL> /
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7499 ALLEN      SALESMAN        4950         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        1375         30 SALES          CHICAGO
+      7566 JONES      MANAGER         2975         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         2850         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         2450         10 ACCOUNTING     NEW DELHI
+      7788 SCOTT      ANALYST         3000         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT       5000         10 ACCOUNTING     NEW DELHI
+      7844 TURNER     SALESMAN        1650         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           1100         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK            950         30 SALES          CHICAGO
+      7902 FORD       ANALYST         3000         20 RESEARCH       DALLAS
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7934 MILLER     CLERK           1300         10 ACCOUNTING     NEW DELHI
+
+12 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT e.EmpNo,e.Ename,e.Job,e.Sal,d.DeptNo,d.Dname,d.Loc
+  2  FROM Emp e, Dept d
+  3* WHERE e.DeptNo=d.DeptNo
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT e.EmpNo,e.Ename,e.Job,e.Sal,d.DeptNo,d.Dname,d.Loc
+  2  FROM Emp e JOIN Dept d
+  3* ON e.DeptNo=d.DeptNo
+SQL> /
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7499 ALLEN      SALESMAN        4950         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        1375         30 SALES          CHICAGO
+      7566 JONES      MANAGER         2975         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         2850         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         2450         10 ACCOUNTING     NEW DELHI
+      7788 SCOTT      ANALYST         3000         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT       5000         10 ACCOUNTING     NEW DELHI
+      7844 TURNER     SALESMAN        1650         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           1100         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK            950         30 SALES          CHICAGO
+      7902 FORD       ANALYST         3000         20 RESEARCH       DALLAS
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7934 MILLER     CLERK           1300         10 ACCOUNTING     NEW DELHI
+
+12 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT EmpNo,Ename,Job,Sal,DeptNo,Dname,Loc
+  2  FROM Emp JOIN Dept
+  3* USING(DeptNo)
+SQL> /
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7499 ALLEN      SALESMAN        4950         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        1375         30 SALES          CHICAGO
+      7566 JONES      MANAGER         2975         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         2850         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         2450         10 ACCOUNTING     NEW DELHI
+      7788 SCOTT      ANALYST         3000         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT       5000         10 ACCOUNTING     NEW DELHI
+      7844 TURNER     SALESMAN        1650         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           1100         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK            950         30 SALES          CHICAGO
+      7902 FORD       ANALYST         3000         20 RESEARCH       DALLAS
+
+     EMPNO ENAME      JOB              SAL     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- ---------- -------------- -------------
+      7934 MILLER     CLERK           1300         10 ACCOUNTING     NEW DELHI
+
+12 rows selected.
+
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+12 rows selected.
+
+SQL> SELECT worker.ename AS Worker
+  2         ,manager.ename AS Manager
+  3         FROM emp worker, emp manager
+  4  WHERE worker.mgr=manager.empno;
+
+WORKER     MANAGER
+---------- ----------
+FORD       JONES
+SCOTT      JONES
+JAMES      BLAKE
+TURNER     BLAKE
+WARD       BLAKE
+ALLEN      BLAKE
+MILLER     CLARK
+ADAMS      SCOTT
+CLARK      KING
+BLAKE      KING
+JONES      KING
+
+11 rows selected.
+
+SQL> SELECT worker.ename AS Worker
+  2         ,manager.ename AS Manager
+  3         FROM emp worker, emp manager
+  4  WHERE worker.mgr=manager.empno ORDER BY worker.ename;
+
+WORKER     MANAGER
+---------- ----------
+ADAMS      SCOTT
+ALLEN      BLAKE
+BLAKE      KING
+CLARK      KING
+FORD       JONES
+JAMES      BLAKE
+JONES      KING
+MILLER     CLARK
+SCOTT      JONES
+TURNER     BLAKE
+WARD       BLAKE
+
+11 rows selected.
+
+
+  1  SELECT worker.empno AS EmpNo, worker.ename AS WorkerName,worker.sal AS Salary
+  2     ,worker.mgr AS MgrId
+  3         ,manager.empno AS MgrNo, manager.ename AS Manager, manager.sal AS Salary
+  4         FROM emp worker, emp manager
+  5* WHERE worker.mgr=manager.empno ORDER BY worker.ename
+SQL> /
+
+     EMPNO WORKERNAME     SALARY      MGRID      MGRNO MANAGER        SALARY
+---------- ---------- ---------- ---------- ---------- ---------- ----------
+      7876 ADAMS            1100       7788       7788 SCOTT            3000
+      7499 ALLEN            4950       7698       7698 BLAKE            2850
+      7698 BLAKE            2850       7839       7839 KING             5000
+      7782 CLARK            2450       7839       7839 KING             5000
+      7902 FORD             3000       7566       7566 JONES            2975
+      7900 JAMES             950       7698       7698 BLAKE            2850
+      7566 JONES            2975       7839       7839 KING             5000
+      7934 MILLER           1300       7782       7782 CLARK            2450
+      7788 SCOTT            3000       7566       7566 JONES            2975
+      7844 TURNER           1650       7698       7698 BLAKE            2850
+      7521 WARD             1375       7698       7698 BLAKE            2850
+
+11 rows selected.
+
+SQL> SELECT * FROM Salgrade;
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL> SELECT * FROM Emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       4950        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1375        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1650        300         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+12 rows selected.
+
+SQL> SELECT e.empno,e.ename,e.job,e.deptno,e.sal,s.grade,s.losal,s.hisal
+  2  FROM Emp e, Salgrade s WHERE e.sal BETWEEN s.losal AND s.hisal;
+
+     EMPNO ENAME      JOB           DEPTNO        SAL      GRADE      LOSAL      HISAL
+---------- ---------- --------- ---------- ---------- ---------- ---------- ----------
+      7900 JAMES      CLERK             30        950          1        700       1200
+      7876 ADAMS      CLERK             20       1100          1        700       1200
+      7934 MILLER     CLERK             10       1300          2       1201       1400
+      7521 WARD       SALESMAN          30       1375          2       1201       1400
+      7844 TURNER     SALESMAN          30       1650          3       1401       2000
+      7782 CLARK      MANAGER           10       2450          4       2001       3000
+      7698 BLAKE      MANAGER           30       2850          4       2001       3000
+      7566 JONES      MANAGER           20       2975          4       2001       3000
+      7788 SCOTT      ANALYST           20       3000          4       2001       3000
+      7902 FORD       ANALYST           20       3000          4       2001       3000
+      7499 ALLEN      SALESMAN          30       4950          5       3001       9999
+
+     EMPNO ENAME      JOB           DEPTNO        SAL      GRADE      LOSAL      HISAL
+---------- ---------- --------- ---------- ---------- ---------- ---------- ----------
+      7839 KING       PRESIDENT         10       5000          5       3001       9999
+
+12 rows selected.
+
+SQL>

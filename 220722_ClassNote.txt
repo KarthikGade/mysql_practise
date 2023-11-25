@@ -1,0 +1,232 @@
+
+SQL> CREATE TABLE fruits
+  2  (
+  3   fruit_name VARCHAR2(30) PRIMARY KEY
+  4   ,fruit_color      VARCHAR2(20) NOT NULL
+  5   ,fruit_type VARCHAR2(15)
+  6  )
+  7  /
+
+Table created.
+
+SQL> INSERT ALL
+  2    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Apple','Red','Non Citrus')
+  3    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Grapes','Green','Citrus')
+  4    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Orange','Orange','Citrus')
+  5    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Mango','Yello','Non Citrus')
+  6    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Banana','Yello','Non Citrus')
+  7    INTO fruits(fruit_name,fruit_color,fruit_type) VALUES('Kiwi','Green','Non Citrus')
+  8  SELECT * FROM DUAL;
+
+6 rows created.
+
+SQL> SELECT * FROM Fruits;
+
+FRUIT_NAME                     FRUIT_COLOR          FRUIT_TYPE
+------------------------------ -------------------- ---------------
+Apple                          Red                  Non Citrus
+Grapes                         Green                Citrus
+Orange                         Orange               Citrus
+Mango                          Yello                Non Citrus
+Banana                         Yello                Non Citrus
+Kiwi                           Green                Non Citrus
+
+6 rows selected.
+
+SQL> CREATE TABLE CitrusFruits AS SELECT * FROM Fruits WHERE 1=2;
+
+Table created.
+
+SQL> CREATE TABLE NonCitrusFruits AS SELECT * FROM Fruits WHERE 1=2;
+
+Table created.
+
+SQL> SELECT * FROM CitrusFruits;
+
+no rows selected
+
+SQL> SELECT * FROM NonCitrusFruits;
+
+no rows selected
+
+SQL> INSERT ALL
+  2     INTO CitrusFruits
+  3     INTO NonCitrusFruits
+  4  SELECT * FROM Fruits;
+
+12 rows created.
+
+SQL> SELECT * FROM CitrusFruits;
+
+FRUIT_NAME                     FRUIT_COLOR          FRUIT_TYPE
+------------------------------ -------------------- ---------------
+Apple                          Red                  Non Citrus
+Grapes                         Green                Citrus
+Orange                         Orange               Citrus
+Mango                          Yello                Non Citrus
+Banana                         Yello                Non Citrus
+Kiwi                           Green                Non Citrus
+
+6 rows selected.
+
+SQL> SELECT * FROM NonCitrusFruits;
+
+FRUIT_NAME                     FRUIT_COLOR          FRUIT_TYPE
+------------------------------ -------------------- ---------------
+Apple                          Red                  Non Citrus
+Grapes                         Green                Citrus
+Orange                         Orange               Citrus
+Mango                          Yello                Non Citrus
+Banana                         Yello                Non Citrus
+Kiwi                           Green                Non Citrus
+
+6 rows selected.
+
+SQL> TRUNCATE TABLE CitrusFruits;
+
+Table truncated.
+
+SQL> TRUNCATE TABLE NonCitrusFruits;
+
+Table truncated.
+
+SQL> INSERT ALL
+  2     WHEN FRUIT_TYPE='Citrus' THEN
+  3             INTO CitrusFruits
+  4     WHEN FRUIT_TYPE='Non Citrus' THEN
+  5             INTO NonCitrusFruits
+  6  SELECT * FROM FRUITS;
+
+6 rows created.
+
+SQL> SELECT * FROM CitrusFRUITS;
+
+FRUIT_NAME                     FRUIT_COLOR          FRUIT_TYPE
+------------------------------ -------------------- ---------------
+Grapes                         Green                Citrus
+Orange                         Orange               Citrus
+
+SQL> SELECT * FROM NonCitrusFRUITS;
+
+FRUIT_NAME                     FRUIT_COLOR          FRUIT_TYPE
+------------------------------ -------------------- ---------------
+Apple                          Red                  Non Citrus
+Mango                          Yello                Non Citrus
+Banana                         Yello                Non Citrus
+Kiwi                           Green                Non Citrus
+
+SQL> CREATE TABLE Orders
+  2  (
+  3     OrderId         NUMBER(4)       PRIMARY KEY
+  4     ,CustomerId     NUMBER(4)
+  5     ,UnitPrice      NUMBER(4)
+  6     ,QtyOrdered     NUMBER(3)
+  7  );
+
+Table created.
+
+SQL> INSERT ALL
+  2     INTO Orders VALUES(1001,101,1000,10)
+  3     INTO Orders VALUES(1002,102,1000,20)
+  4     INTO Orders VALUES(1003,103,1000,30)
+  5     INTO Orders VALUES(1004,101,1000,15)
+  6     INTO Orders VALUES(1005,102,1000,25)
+  7     INTO Orders VALUES(1005,103,1000,35)
+  8  SELECT * FROM Dual;
+INSERT ALL
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C009751) violated
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  INSERT ALL
+  2     INTO Orders VALUES(1001,101,1000,10)
+  3     INTO Orders VALUES(1002,102,1000,20)
+  4     INTO Orders VALUES(1003,103,1000,30)
+  5     INTO Orders VALUES(1004,101,1000,15)
+  6     INTO Orders VALUES(1005,102,1000,25)
+  7     INTO Orders VALUES(1006,103,1000,35)
+  8* SELECT * FROM Dual
+SQL> /
+
+6 rows created.
+
+SQL> SELECT * FROM Orders;
+
+   ORDERID CUSTOMERID  UNITPRICE QTYORDERED
+---------- ---------- ---------- ----------
+      1001        101       1000         10
+      1002        102       1000         20
+      1003        103       1000         30
+      1004        101       1000         15
+      1005        102       1000         25
+      1006        103       1000         35
+
+6 rows selected.
+
+SQL> SELECT OrderId,CustomerId,UnitPrice,QtyOrdered,UnitPrice*QtyOrdered Total FROM Orders;
+
+   ORDERID CUSTOMERID  UNITPRICE QTYORDERED      TOTAL
+---------- ---------- ---------- ---------- ----------
+      1001        101       1000         10      10000
+      1002        102       1000         20      20000
+      1003        103       1000         30      30000
+      1004        101       1000         15      15000
+      1005        102       1000         25      25000
+      1006        103       1000         35      35000
+
+6 rows selected.
+
+SQL> CREATE TABLE SmallOrders
+  2  (
+  3     OrderId         NUMBER(4)       PRIMARY KEY
+  4     ,CustomerId     NUMBER(4)
+  5     ,OrderedAmount  NUMBER(6)
+  6  );
+
+Table created.
+
+SQL> CREATE TABLE MediumOrders AS SELECT * FROM SmallOrders;
+
+Table created.
+
+SQL> CREATE TABLE LargeOrders AS SELECT * FROM SmallOrders;
+
+Table created.
+
+SQL> INSERT ALL
+  2     WHEN OrderedAmount<=15000 THEN
+  3             INTO SmallOrders
+  4     WHEN OrderedAmount>15000 AND OrderedAmount<=25000 THEN
+  5             INTO MediumOrders
+  6     WHEN OrderedAmount>25000 THEN
+  7             INTO LargeOrders
+  8  SELECT OrderId,CustomerId,UnitPrice*QtyOrdered AS OrderedAmount FROM Orders;
+
+6 rows created.
+
+SQL> SELECT * FROM SmallOrders;
+
+   ORDERID CUSTOMERID ORDEREDAMOUNT
+---------- ---------- -------------
+      1001        101         10000
+      1004        101         15000
+
+SQL> SELECT * FROM MediumOrders;
+
+   ORDERID CUSTOMERID ORDEREDAMOUNT
+---------- ---------- -------------
+      1002        102         20000
+      1005        102         25000
+
+SQL> SELECT * FROM LargeOrders;
+
+   ORDERID CUSTOMERID ORDEREDAMOUNT
+---------- ---------- -------------
+      1003        103         30000
+      1006        103         35000
+
+SQL>
